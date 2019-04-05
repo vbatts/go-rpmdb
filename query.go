@@ -58,13 +58,13 @@ func NVRsAtPath(path string) ([]string, error) {
 
 // Info collects detailed information on the unique package name (or NVR)
 // provided.
-func Info(nvr string) (interface{}, error) {
+func Info(nvr string) (*RPMHeader, error) {
 	return InfoAtPath(defaultDbPath, nvr)
 }
 
 // InfoAtPath collects detailed information on the unique package name (or NVR)
 // provided at the specified path.
-func InfoAtPath(path, nvr string) (interface{}, error) {
+func InfoAtPath(path, nvr string) (*RPMHeader, error) {
 	cmd := exec.Command("rpm", fmt.Sprintf("--dbpath=%s", path), "-q", "--xml", nvr)
 	stdout := bytes.NewBuffer(nil)
 	stderr := bytes.NewBuffer(nil)
@@ -83,7 +83,7 @@ func InfoAtPath(path, nvr string) (interface{}, error) {
 		return nil, err
 	}
 
-	return hdr, nil
+	return &hdr, nil
 }
 
 // isError parses the output of `rpm` since sometimes (all the time?) errors
