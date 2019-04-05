@@ -1,4 +1,4 @@
-package rpmdbinfo
+package rpmdb
 
 import "encoding/xml"
 
@@ -14,8 +14,8 @@ type RPMTag struct {
 	Values []string `xml:",any"`
 }
 
-// Tags show the names of the tags available on this package object
-func (hdr RPMHeader) Tags() []string {
+// TagNames show the names of the tags available on this package object
+func (hdr RPMHeader) TagNames() []string {
 	tags := []string{}
 	for _, tag := range hdr.Tags {
 		tags = append(tags, tag.Name)
